@@ -2,7 +2,7 @@ from tkinter import *
 import all_constants as c
 
 
-class Converter():
+class Converter:
     """
     Temperature conversion tool (C to F or F to C)
     """
