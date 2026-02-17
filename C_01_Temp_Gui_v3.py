@@ -91,7 +91,7 @@ class Converter:
             else:
                 error = "Too Low"
         except ValueError:
-            error = "Please enter a number"
+            error = f"Enter a number more than / equal to {min_temp}"
 
         # display the error of necessary
         if error != "":
