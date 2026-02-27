@@ -1,6 +1,7 @@
 from tkinter import *
 from functools import partial  # To prevent unwanted windows
 
+
 class Converter:
     """
     Temperature conversion tool (C to F or F to C)
@@ -41,7 +42,7 @@ class DisplayHelp:
 
         # IF users press the cross at the top, closes help and 'releases' help button
         self.help_box.protocol('WM_DELETE_WINDOW',
-                                  partial(self.close_help, partner))
+                               partial(self.close_help, partner))
 
         self.help_frame = Frame(self.help_box, width=300,
                                 height=200)
@@ -80,7 +81,6 @@ class DisplayHelp:
         # Put help button back to normal
         partner.to_help_button.config(state=NORMAL)
         self.help_box.destroy()
-
 
 
 # main routine
