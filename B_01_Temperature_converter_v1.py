@@ -75,8 +75,6 @@ class Converter:
         self.to_history_button = self.button_ref_list[3]
         self.to_history_button.config(state=DISABLED)
 
-
-
     def check_temp(self, min_temp):
         """
         Checks temperature is valid and either invokes calculation function or shows a custom error
