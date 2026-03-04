@@ -2,6 +2,7 @@ from tkinter import *
 from functools import partial  # To prevent unwanted windows
 import all_constants as c
 
+
 class Converter:
     """
     Temperature conversion tool (C to F or F to C)
@@ -14,7 +15,7 @@ class Converter:
 
         self.all_calculations_list = ['10.0 °F is -12°C', '20.0 °F is -7°C',
                                       '30.0 °F is -1°C', '40.0 °F is 4°C',
-                                      '50.0 °F is 10°C', '60.0 °F is 16°C']
+                                      '50.0 °F is 10°C']
 
         self.temp_frame = Frame(padx=10, pady=10)
         self.temp_frame.grid()
@@ -67,6 +68,25 @@ class ExportHistory:
         recent_intro_txt = (f"Below are {calc_amount} calculations "
                             f"(to the nearest degree)")
 
+        # Create string from calculations list (the newest calculation first)
+        newest_first_string = ""
+        newest_first_list = list(reversed(calculations))
+
+        # Last item added in outside the for loop so that the spacing is correct
+        if len(newest_first_list) <= c.MAX_CALCS:
+
+            for item in newest_first_list[:-1]:
+                newest_first_string += item + "\n"
+
+            newest_first_string += newest_first_list[-1]
+
+        # If we have more than five items...
+        else:
+            for item in newest_first_list[:c.MAX_CALCS - 1]:
+                newest_first_string += item + "\n"
+
+            newest_first_string += newest_first_list[c.MAX_CALCS - 1]
+
         export_instruction_txt = ("export this"
                                   ":)")
 
@@ -76,7 +96,7 @@ class ExportHistory:
         history_labels_list = [
             ["History / Export", ("Arial", "16", "bold"), None],
             [recent_intro_txt, ("Arial", "11"), None],
-            ["calculations list", ("Arial", "14"), calc_back],
+            [newest_first_string, ("Arial", "14"), calc_back],
             [export_instruction_txt, ("Arial", "11"), None]
         ]
 
