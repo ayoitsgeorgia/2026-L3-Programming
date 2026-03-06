@@ -1,6 +1,7 @@
 from tkinter import *
 from functools import partial  # To prevent unwanted windows
 import all_constants as c
+from datetime import date
 
 
 class Converter:
@@ -121,7 +122,7 @@ class ExportHistory:
 
         # button list (button text | bg colour | command | row | column)
         button_details_list = [
-            ["Export", "#004C99", "", 0, 0],
+            ["Export", "#004C99", lambda: self.export_data(calculations), 0, 0],
             ["Close", "#666666", partial(self.close_history, partner), 0, 1],
         ]
 
@@ -132,6 +133,35 @@ class ExportHistory:
                                       fg="#FFFFFF", width=12,
                                       command=btn[2])
             self.make_button.grid(row=btn[3], column=btn[4], padx=10, pady=10)
+
+    def export_data(self, calculations):
+        # **** Get current date for heading and filename ****
+        today = date.today()
+
+        # Get day, month, and year as individual strings
+        day = today.strftime("%d")
+        month = today.strftime("%m")
+        year = today.strftime("%Y")
+
+        file_name = f"temperatures_{year}_{month}_{day}"
+
+        # edit label so users know that their export has been done
+        success_string = ("Export Successful! The file is called "
+                          f"{file_name}.txt")
+        self.export_filename_label.config(fg="#009900", text=success_string,
+                                          font=("Arial", "12", "bold"))
+
+        write_to = f"{file_name}.txt"
+
+        with open(write_to, "w") as text_file:
+            text_file.write("***** Temperature Calculations *****\n")
+            text_file.write(f"Generated: {day}/{month}/{year}\n\n")
+            text_file.write("Here is your calculation history (oldest to newest)...\n")
+
+            # write the item to file
+            for item in calculations:
+                text_file.write(item)
+                text_file.write("\n")
 
     def close_history(self, partner):
         """
